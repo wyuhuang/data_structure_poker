@@ -4,33 +4,25 @@
 #include"LinkedList.h"
 #include"Poker.h"
 #include"Player.h"
-#include"HashTable.h"
-#include<string>
 class ServerContext {
 	public:
 		ServerContext();
 		~ServerContext(); 
 		Poker* getPokers();
-		//涓嶆彁渚泂etPokers锛屽洜涓篻etPokers灏卞彲浠ヨ幏鍙栨寚閽堬紝鐒跺悗set
+		//不提供setPokers，因为getPokers就可以获取指针，然后set
 		LinkedList<Player> getPlayerList();
-		//鍚屼笂 
-		void shufflePokers();//娲楃墝
-		Poker dealOnePoker();//鍙戝嚭涓�寮犵墝 
-
-		string** settlementScore();
-
+		//同上 
+		void shufflePokers();//洗牌
+		Poker dealOnePoker();//发出一张牌 
+		void settlementScore();
 		int getPokersTop();
 		void setPokersTop(int pokerTop);
-
 	private:
 		Poker pokers[52];
 		LinkedList<Player> playerList;
-		//褰撳墠娲昏穬鐜╁瀛楁绫诲瀷鐢辨湇鍔＄鍐冲畾
+		//当前活跃玩家字段类型由服务端决定
 		//int activeIP[4]; 
 		int pokersTop = 51;
 };
-
-
-
 
 #endif
