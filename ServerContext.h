@@ -16,13 +16,13 @@ class ServerContext {
 		//同上 
 		void shufflePokers();//洗牌
 		Poker dealOnePoker();//发出一张牌 
-		int settlementScore();
+		string** settlementScore();
 	private:
 		Poker pokers[52];
 		LinkedList<Player> playerList;
 		//当前活跃玩家字段类型由服务端决定
 		//int activeIP[4]; 
-		int PokersTop = 52;
+		int pokersTop = 51;
 };
 
 

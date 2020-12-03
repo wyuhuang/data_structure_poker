@@ -17,38 +17,104 @@ ServerContext::ServerContext() {
 }
 
 void ServerContext::shufflePokers() {
+
+	//cout<<"number is "<<number<<endl;
+	//cout<<"swapPosition is "<<swapPosition<<endl;
+	//打印
+	//for(int i=0; i<52; i++) {
+		//pokers[i].print();
+	//}
+	//cout<<endl;
 	unsigned seed = time(0);
-	 srand(seed);
-	 int number = rand() % 32 + 8; //8-39
-	 int swapPosition = rand() % (52 - number) + 1;//1-44
-	 
-	 
+	srand(seed);
+	for(int i=0; i<100; i++) {
+		int number = rand() % 32 + 8; //8-39
+		int swapPosition = rand() % (52 - number - 1) + 1;//1-43
+		//	cout<<"number is "<<number<<endl;
+		//cout<<"swapPosition is "<<swapPosition<<endl;
+		Poker temp[number];
+		//要移动的牌转移到temp临时表
+		for(int i=0; i<number; i++) {
+			temp[i] = pokers[swapPosition + i];//43
+		}
+		//牌堆顶的牌下移
+		for(int i=swapPosition + number; i<52; i++) {
+			pokers[i - number] = pokers[i]; //43 43+8
+		}
+		//临时表的扑克移到牌堆顶
+		for(int i=0; i<number; i++) {
+			pokers[52 - number + i] = temp[i];//43 + 8
+		}
+	}
+
+	//打印
+	//for(int i=0; i<52; i++) {
+		//pokers[i].print();
+//	}
+
 }
 ServerContext::~ServerContext() {
 
 }
 
-int ServerContext::settlementScore(){
-	Node<Player> *p = playerList.getFirst();
+Poker* ServerContext::getPokers() {
+	return pokers;
+}
+
+Poker ServerContext::dealOnePoker() {
+	return pokers[pokersTop--];
+}
+
+LinkedList<Player> ServerContext::getPlayerList() {
+	return this->playerList;
+}
+
+string** ServerContext::settlementScore(){
+	Node<Player> *p = playerList.getFirst()->getNext();
 	Node<Player> *q;		//工作指针 
 	q = p;					//初始化工作指针 
 	HashTable HT;
 	int PlayerLength = playerList.getLength();//获取玩家个数 
-	string RankingList[PlayerLength][2];//返回的字符串数组 
-	int sum[PlayerLength] ={0}; 
-	int max = 22,min = 0,j=0; 
+	string *(*RankingList) = new string*[PlayerLength];//返回的字符串数组 
+	int sum[PlayerLength]; 
+	int max = 22,min = 0,j=0,i=0,PNTotal; 
+	string name;
+	//初始化数组 
+	for(i = 0; i<PlayerLength;i++){
+		sum[i] = 0;
+		RankingList[i] = new string[2];
+		for(j= 0;j < 2;j++ ){
+			RankingList[i][j] = " ";
+		}
+	}
+	
+	//测试 
+	//cout<<PlayerLength;
+	//cout<<q->getData().getPointNumberTotal();
+	
 	//将分值和名字装入哈希表中 
-	while(q->getNext() != nullptr){
-		if(q->getData().getPointNumberTotal() > 21){
-			HT.Insert(22,p->getData().getName());
+	while(q != nullptr){
+		PNTotal = q->getData().getPointNumberTotal();
+		name = q->getData().getName();
+//		cout<<name<<endl;
+//		cout<<PNTotal<<endl;
+		if(PNTotal > 21){
+			HT.Insert(22,name);
+			
+			//测试 
+//			cout<<"超21插入HASH"<<endl;
 		}
 		else{
-			HT.Insert(p->getData().getPointNumberTotal(),p->getData().getName());
+			HT.Insert(PNTotal,name);
+			//测试 
+//			cout<<"少于21插入成功"<<endl;
+//			HT.SearchName(p->getData().getPointNumberTotal());
 		}
 		q = q->getNext();
 	}
+	
 	//将分值排序
-	for(int i = 0;i < PlayerLength;i++){
+	for( i = 0;i < PlayerLength;i++){
 		q = p;
 		while(q->getNext() != nullptr){
 			if(q->getData().getPointNumberTotal() < max && q->getData().getPointNumberTotal() > min){
@@ -72,12 +138,27 @@ int ServerContext::settlementScore(){
 		sum[i] = min;
 		min = 0;
 	} 
+	
+	
+	//测试：
+//	for(i = 0;i < PlayerLength;i++){
+//		cout<<sum[i]<<endl; 
+//	}
+	
+	
+	 
 	//利用sum来写入字符串数组 
+	j = 0;
 	while(sum[j] != 0 && j < PlayerLength) {
 		RankingList[j][0] = to_string(sum[j]);
 		RankingList[j][1] = HT.SearchName(sum[j]);
 		j++;
+		
+		//测试
+//		cout<<RankingList[j][0]<<endl;
+//		cout<<RankingList[j][1];
 	}
+	return RankingList;
 }
 
 

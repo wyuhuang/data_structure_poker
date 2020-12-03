@@ -1,5 +1,6 @@
 #include "Player.h"
-
+#include<iostream>
+using namespace std;
 Player::Player()
 {
 }
@@ -17,7 +18,9 @@ int Player::getPointNumberTotal(){
 }
 
 void Player::setPointNumberTotal(int pointNumberTotal) {
+	
 	this->pointNumberTotal = pointNumberTotal;
+//	cout<<this->pointNumberTotal<<"sss";
 }
 
 int Player::getPokerNumber(){
@@ -29,11 +32,13 @@ void Player::setPokerNumber(int pokerNumber) {
 }
 
 string Player::getName(){
-	return name;
+//	cout<<"getName: "<<name<<endl;
+	return this->name;
 }
 
 void Player::setName(string name){
 	this->name = name;
+//	cout<<this->name<<endl;
 }
 
 bool Player::getActive(){
