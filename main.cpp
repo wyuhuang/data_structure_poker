@@ -13,6 +13,10 @@ int main() {
 	for(int i=0; i<52; i++) {
 		cout<<to_string(pokers[i].getPointNumber()) + pokers[i].getFlowerColor()<<endl;
 	}
+	cout<<a.getPokersTop()<<endl;
+	Poker poker = a.dealOnePoker();
+	poker.print();
+	cout<<a.getPokersTop();
 	//printPoker(pokerStr);
 	return 0;
 }
