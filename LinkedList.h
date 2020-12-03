@@ -15,12 +15,13 @@ class LinkedList:public List<T>{
 		virtual int getLength();
         virtual int locate(T data);
         virtual T get(int index);
-        virtual void insert(T data, int index);
+        virtual void add(T data);
         virtual T deleteByIndex(int index);
         virtual bool isEmpty();
         virtual void printList();
     private:
-    	Node<T> *first;
+    	Node<T> *first = nullptr;
+    	Node<T> *tail = nullptr;
 };
 
 //无参构造函数,构造只有一个头节点的LinkedList,且头结点next指向nullptr, 免得乱指
@@ -28,6 +29,7 @@ template <class T>
 LinkedList<T>::LinkedList() {
 	first = new Node<T>();
 	first->setNext(nullptr);
+	tail = first;
 	//nullptr关键字用于标识空指针，是std::nullptr_t类型的（constexpr）变量。
 	//它可以转换成任何指针类型和bool布尔类型（主要是为了兼容普通指针可以作为条件判断语句的写法），但是不能被转换为整数。
 	//很想java的null 
@@ -101,12 +103,9 @@ T LinkedList<T>::get(int index) {
 //insert
 //关注的是下一节点, 而不是当前结点, 否则, 上一个结点的地址就丢失了
 template <class T>
-void LinkedList<T>::insert(T data, int index) {
-	if(index==0) {
-		throw "function named \"insert\": invalid index, too smaller";
-	}
-	Node<T>* p = first;//指针指向头结点
-	int position = 0;//表示当前结点对应序号
+void LinkedList<T>::add(T data) {
+	//Node<T>* p = first;//指针指向头结点
+	//int position = 0;//表示当前结点对应序号
 	/*	while(p->getNext() != nullptr) {//判断是否存在下一个结点
 			position++;//存在则 序号加一, 表示下一节点的位置
 			if(position == index) {//判断下一节点位置是否是要插入的位置index
@@ -126,17 +125,12 @@ void LinkedList<T>::insert(T data, int index) {
 			p->setNext(new Node<T>(data, nullptr));
 		}
 		throw "function named \"insert\": invalid index, too biger";*/
-	while(position < index-1) {
-		if(p->getNext() == nullptr) {
-			throw "function named \"insert\": invalid index, too biger";
-		}
-		p = p->getNext();
-		position++;
-	}
+	
 	//new新节点, 放入data且next指向p的下一个结点,即当前结点的下一个结点
-	Node<T>* node = new Node<T>(data, p->getNext());
+	Node<T>* node = new Node<T>(data, nullptr);
 	//当前结点p的next指向新节点
-	p->setNext(node);
+	tail->setNext(node);
+	tail = node;
 	//忘记返回了...
 	return;
 }
