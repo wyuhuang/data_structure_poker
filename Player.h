@@ -15,6 +15,8 @@ class Player
 		void setPokerNumber(int pokerNumber);
 		int* getIp();
 		void setIp(int ip[]);
+		string getName();
+		void setName(string name);
 		bool getActive();
 		void setActive(bool active);
 		bool operator==(Player player);
