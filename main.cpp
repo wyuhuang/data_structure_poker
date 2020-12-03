@@ -2,6 +2,8 @@
 #include"Player.h"
 int main() {
 	ServerContext a;
+
+  /*glt的test代码
 	Player *p1 = new Player();
 	Player *p2 = new Player();
 	Player *p3 = new Player();
@@ -17,5 +19,18 @@ int main() {
 	p4->setName("p4");
 	p5->setPointNumberTotal(26);
 	p5->setName("p5");
+  */
+
+	string pokerStr = "1C";
+	Poker* pokers = a.getPokers();
+	for(int i=0; i<52; i++) {
+		cout<<to_string(pokers[i].getPointNumber()) + pokers[i].getFlowerColor()<<endl;
+	}
+	cout<<a.getPokersTop()<<endl;
+	Poker poker = a.dealOnePoker();
+	poker.print();
+	cout<<a.getPokersTop();
+	//printPoker(pokerStr);
+
 	return 0;
 }

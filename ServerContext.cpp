@@ -65,6 +65,13 @@ Poker ServerContext::dealOnePoker() {
 	return pokers[pokersTop--];
 }
 
+int ServerContext::getPokersTop() {
+	return pokersTop;
+}
+
+void ServerContext::setPokersTop(int pokersTop) {
+	this->pokersTop = pokersTop;
+}
 LinkedList<Player> ServerContext::getPlayerList() {
 	return this->playerList;
 }

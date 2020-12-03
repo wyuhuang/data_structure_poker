@@ -1,17 +1,19 @@
 #include "Player.h"
+
 #include<iostream>
 using namespace std;
 Player::Player()
 {
+
 }
 
-Player::~Player()
-{
+Player::~Player() {
 }
 
 bool Player::operator==(Player player) {
 	return false;
 }
+
 
 int Player::getPointNumberTotal(){
 	return pointNumberTotal;
