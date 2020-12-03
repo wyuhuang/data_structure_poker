@@ -19,6 +19,7 @@ class LinkedList:public List<T>{
         virtual T deleteByIndex(int index);
         virtual bool isEmpty();
         virtual void printList();
+        Node<T> *getFirst();
     private:
     	Node<T> *first;
 };
@@ -191,5 +192,11 @@ void LinkedList<T>::printList() {
 		p = p->getNext();
 	}
 	cout<<endl;
+}
+
+//getFirst
+template <class T>
+Node<T> * LinkedList<T>::getFirst(){
+	return first;
 }
 #endif

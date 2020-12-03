@@ -4,6 +4,8 @@
 #include"LinkedList.h"
 #include"Poker.h"
 #include"Player.h"
+#include"HashTable.h"
+#include<string>
 class ServerContext {
 	public:
 		ServerContext();
@@ -14,7 +16,7 @@ class ServerContext {
 		//同上 
 		void shufflePokers();//洗牌
 		Poker dealOnePoker();//发出一张牌 
-		void settlementScore();
+		int settlementScore();
 	private:
 		Poker pokers[52];
 		LinkedList<Player> playerList;
@@ -22,5 +24,8 @@ class ServerContext {
 		//int activeIP[4]; 
 		int PokersTop = 52;
 };
+
+
+
 
 #endif

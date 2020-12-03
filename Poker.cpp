@@ -18,13 +18,10 @@ int Poker::getPointNumber() {
 	return this->pointNumber;
 }
 
-char Poker::getFlowerColor() {
-	return this->flowerColor; 
-}
 void Poker::setFlowerColor(char flowerColor) {
 	this->flowerColor = flowerColor;
 }
 void Poker::print() {
 	cout<<pointNumber;
-	cout<<flowerColor<<' ';
+	cout<<flowerColor<<endl;
 }
